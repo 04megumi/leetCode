@@ -1,52 +1,21 @@
-# Prerequisites
-*.d
+# Ignore virtual environment folder
+myenv/
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# Ignore virtual environment folder
+myenv/
 
-# Linker output
-*.ilk
-*.map
-*.exp
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
 
-# Precompiled Headers
-*.gch
-*.pch
+# Ignore virtual environment created by some tools like pipenv or poetry
+Pipfile.lock
+poetry.lock
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+# Ignore IDE/editor files
+.vscode/
+.idea/
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Ignore system files
+.DS_Store

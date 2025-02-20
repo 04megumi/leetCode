@@ -7,15 +7,15 @@
 */
 
 class Solution {
-    public:
-        int lengthOfLongestSubstring(string s) {
-            int ans=0, left=0;
-            unordered_map<char, int> hashMap;
-            for(int i=0;i<s.length();i++){
-                if(hashMap.count(s[i])) left = max(left, hashMap[s[i]]+1);
-                hashMap[s[i]] = i;
-                ans = max(ans, i - left + 1);
-            }
-            return ans;
+public:
+    int lengthOfLongestSubstring(string s) {
+        int ans=0, left=0;
+        unordered_map<char, int> hashMap;
+        for(int i=0;i<s.length();i++){
+            if(hashMap.count(s[i])) left = max(left, hashMap[s[i]]+1);
+            hashMap[s[i]] = i;
+            ans = max(ans, i - left + 1);
         }
-    };
+        return ans;
+    }
+};

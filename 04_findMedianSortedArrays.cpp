@@ -38,13 +38,12 @@ public:
         if(nums1.size()<nums2.size()) return findMedianSortedArrays(nums2, nums1);
         int p1 = 0, p2 = 0, key = (nums1.size()+nums2.size())/2 - 1;
         int left = 0, right = nums1.size()-1;
-        if(nums1.size()==1 && !nums2.size()) return nums1[0];
+        if(key<0) return nums1[0];
+        if() return (nums1.size()+nums2.size())%2 ? nums1[key-nums1.size()+1] : (nums1[key-nums1.size()+1]+nums2[key-nums1.size()+])*1.0/2;
         while(left<=right){
             p1 = (right+left) >> 1;
             p2 = key - p1;
             if(p1==nums1.size()-1) break;
-            if(p2==nums2.size()-1 && nums2[p2]<nums1[p1+1]) break;
-            if(p2==nums2.size()-1) {left=p1+1; continue;}
             if(p2<0) {right=p1-1; continue;}
             if(max(nums1[p1], nums2[p2])<min(nums1[p1+1],nums2[p2+1])) break;
             if(nums1[p1]>nums2[p2+1]) right=p1-1;

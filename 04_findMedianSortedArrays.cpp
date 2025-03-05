@@ -30,30 +30,64 @@
      solution: let p1 binary_search and p2=f(p1),
                until ..
 ------------------------------------------------------------------
+     case: [1,4,5,6,7] [1,2]
+           [3,4,5,6,7] [1,2]
+           [1,2,3,4] [-4,-3,-2,-1]
+           [1,2,3,4] [-1,1]
+           [1,2] [1]
+           [1,2] [3]
+           [1,2,3] [5.6]
+           [3,3] [1,2]
+
 */
+#include<iostream>
+#include<vector>
+using namespace std;
 
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        if(nums1.size()<nums2.size()) return findMedianSortedArrays(nums2, nums1);
-        int p1 = 0, p2 = 0, left = 0, right = nums1.size()-1;
-        const int key = (nums1.size()+nums2.size())/2 - 1;
-        if(key<0) return nums1[0];
-        if(!nums2.size()) return nums1.size()%2?nums1[nums1.size()>>1]:(nums1[nums1.size()/2-1]+nums1[nums1.size()>>1])*1.0/2;
-        if(key+1<=nums1.size()-1 && nums2[0]>=nums1[key+1])
-            return (nums1.size()+nums2.size())%2?nums1[key+1]:(nums1[key]+nums1[key+1])*1.0/2;
-        if(key>=nums2.size()-1 && (key-nums2.size()+2+(nums1.size()+nums2.size()+1)%2)<nums1.size() && nums2[nums2.size()-1]<=nums1[key-nums2.size()+2+(nums1.size()+nums2.size()+1)%2]) 
-            return ((nums1.size()+nums2.size())%2?max(nums2[nums2.size()-1],nums1[key-nums2.size()+1]):(max(nums1[key-nums2.size()+1],nums2[nums2.size()-1])+nums1[key-nums2.size()+2])*1.0/2);
-        while(left<=right){
-            p1 = (right+left) >> 1;
-            p2 = key - p1;
-            if(p1==nums1.size()-1) break;
-            if(p2<0) {right=p1-1; continue;}
-            if(p2>=nums2.size()-1) {left=p1+1; continue;}
-            if(max(nums1[p1],nums2[p2])<min(nums1[p1+1],nums2[p2+1])) break;
-            if(nums1[p1]>nums2[p2+1]) {right=p1-1; continue;}
-            if(nums2[p2]>nums1[p1+1]) {left=p1+1; continue;}
-        }
-        return (nums1.size()+nums2.size())%2?max(nums1[p1],nums2[p2]):(nums1[p1]+nums2[p2])*1.0/2;
+        if(nums1.size()<nums2.size()) 
+            return findMedianSortedArrays(nums2,nums1);
+        
+        int add = nums1.size()+nums2.size();
+        int n1 = nums1.size(), n2 = nums2.size();
+        
+        if(!n2 && add==1)
+            return nums1[0];
+
+        if(!n2 && add!=1)
+            return add%2 ? nums1[add>>1] : (nums1[add>>1]+nums1[add/2-1])*1.0/2;
+
+        if(n1==1 && n2==1)
+            return (nums1[0]+nums2[0])*1.0/2;
+
+        if(nums2[n2-1]<=nums1[add>>1-n2+1])
+            return add%2 ? max(nums1[add/2-n2],nums2[n2-1]):(nums1[add/2-n2]+(n1==n2?nums2[n2-1]:max(nums2[n2-1],nums1[add/2-n2-1]))*1.0/2);
+
+        if(nums1[add>>1-1]<=nums2[0])
+            return add%2 ? min(nums2[0],nums1[add>>1]):(nums1[add/2-1]+(n1==n2?nums2[0]:min(nums1[add>>1],nums2[0])))*1.0/2;
+
+
+        return 0;
     }
 };
+
+
+int main()
+{   
+    vector<int> nums1 = {3,3};
+    vector<int> nums2 = {1,2};
+    
+    cout << "nums1:";
+    for(int i=0;i<nums1.size();i++) cout << nums1[i] << " ";
+    cout << endl;
+    cout << "nums2:";
+    for(int i=0;i<nums2.size();i++) cout << nums2[i] << " ";
+    cout << endl;
+
+    Solution s;
+    cout << "median:" << s.findMedianSortedArrays(nums1,nums2) << endl;
+
+    return 0;
+}
